@@ -1,0 +1,124 @@
+{
+  "carts": [
+    {
+      "commuteId": "commute-1763694214181",
+      "endTime": "06:18",
+      "id": "cart-nws0601",
+      "name": "NWS0601",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is the first traffic report of the **MORNING** segment, don't use any prior report context. Use a brief intro like \"welcome to your morning commute\". Do not provide an outro, simply end the traffic report on the last callout.. **DO NOT SAY AFTERNOON FOR ANY REASON.**",
+      "startTime": "05:55",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1763694214181",
+      "endTime": "06:55",
+      "id": "cart-nws0602",
+      "name": "NWS0602",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is a MORNING traffic report. **DO NOT USE AN INTRO - LAUNCH STRAIGHT INTO THE TRAFFIC REPORT** Do not provide an outro, simply end the traffic report on the last callout. DO NOT SAY AFTERNOON FOR ANY REASON. **DO NOT SAY AFTERNOON FOR ANY REASON.**",
+      "startTime": "06:19",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1763694214181",
+      "endTime": "07:18",
+      "id": "cart-nws0701",
+      "name": "NWS0701",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is a morning traffic report. **DO NOT USE AN INTRO - LAUNCH STRAIGHT INTO THE TRAFFIC REPORT** Do not provide an outro, simply end the traffic report on the last callout. **DO NOT SAY AFTERNOON FOR ANY REASON.**",
+      "startTime": "06:56",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1763694214181",
+      "endTime": "07:55",
+      "id": "cart-nws0702",
+      "name": "NWS0702",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is a morning traffic report. **DO NOT USE AN INTRO - LAUNCH STRAIGHT INTO THE TRAFFIC REPORT**. Do not provide an outro, simply end the traffic report on the last callout. **DO NOT SAY AFTERNOON FOR ANY REASON.**",
+      "startTime": "07:19",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1763694214181",
+      "endTime": "08:18",
+      "id": "cart-nws0801",
+      "name": "NWS0801",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is a morning traffic report. **DO NOT USE AN INTRO - LAUNCH STRAIGHT INTO THE TRAFFIC REPORT**. Do not provide an outro, simply end the traffic report on the last callout. **DO NOT SAY AFTERNOON FOR ANY REASON.**",
+      "startTime": "07:56",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1763694214181",
+      "endTime": "08:59",
+      "id": "cart-nws0802",
+      "name": "NWS0802",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is the last morning traffic report of the segment. **DO NOT USE AN INTRO - LAUNCH STRAIGHT INTO THE TRAFFIC REPORT** USE A BRIEF CLOSER TO WRAP UP MORNING TRAFFIC AND CALL LISTENERS BACK FOR THE AFTERNOON REPORT. eg. \"That's all for our morning traffic updates, catch us this afternoon for more\".",
+      "startTime": "08:19",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1",
+      "endTime": "15:18",
+      "id": "cart-nws0301",
+      "name": "NWS0301",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "**CRITICAL:** IGNORE PRIOR REPORT CONTEXT - DO NOT MENTION ANY PRIOR REPORT CONTEXT. This is the first AFTERNOON report and we DO NOT WANT MORNING REPORTS TO ADD CONTEXT TO THIS REPORT. Open with an appropriate afternoon opening like \"welcome to your AFTERNOON. commute\". **IMPORTANT - DO NOT MENTION MORNING, THIS IS AN AFTERNOON REPORT!** Do not provide an outro, simply end the traffic report on the last callout.",
+      "startTime": "14:55",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1",
+      "endTime": "15:55",
+      "id": "cart-nws0302",
+      "name": "NWS0302",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is the second afternoon report. DO NOT USE AN INTRO, launch straight into the traffic report.**IMPORTANT - DO NOT MENTION MORNING, THIS IS AN AFTERNOON REPORT!**. Do not provide an outro, simply end the traffic report on the last callout.",
+      "startTime": "15:19",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1",
+      "endTime": "16:18",
+      "id": "cart-nws0401",
+      "name": "NWS0401",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is an afternoon traffic report. DO NOT USE AN INTRO, launch straight into the traffic report.**IMPORTANT - DO NOT MENTION MORNING, THIS IS AN AFTERNOON REPORT!**. Do not provide an outro, simply end the traffic report on the last callout.",
+      "startTime": "15:56",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1",
+      "endTime": "16:55",
+      "id": "cart-nws0402",
+      "name": "NWS0402",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is an afternoon traffic report. DO NOT USE AN INTRO, launch straight into the traffic report.**IMPORTANT - DO NOT MENTION MORNING, THIS IS AN AFTERNOON REPORT!** Do not provide an outro, simply end the traffic report on the last callout.",
+      "startTime": "16:19",
+      "voiceName": "kore"
+    },
+    {
+      "commuteId": "commute-1",
+      "endTime": "17:59",
+      "id": "cart-nws0502",
+      "name": "NWS0502",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is the LAST afternoon traffic report of the evening. DO NOT USE AN INTRO, launch straight into the traffic report. **USE A BRIEF, SIMPLE AND APPROPRIATE CLOSER FOR THE EVENING TRAFFIC SEGMENT eg. \"That's all for the evening traffic report, we'll catch you in the morning with more traffic updates\"**",
+      "startTime": "17:19",
+      "voiceName": "kore"
+    },
+    {
+      "id": "cart-1766106819082",
+      "name": "NWS0501",
+      "commuteId": "commute-1",
+      "startTime": "16:56",
+      "endTime": "17:18",
+      "voiceName": "kore",
+      "saveDirectory": "D:\\TRF",
+      "slotContext": "This is an afternoon traffic report. DO NOT USE AN INTRO, launch straight into the traffic report.**IMPORTANT - DO NOT MENTION MORNING, THIS IS AN AFTERNOON REPORT!** Do not provide an outro, simply end the traffic report on the last callout."
+    }
+  ]
+}

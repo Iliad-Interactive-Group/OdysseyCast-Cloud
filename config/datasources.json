@@ -1,0 +1,25 @@
+{
+  "tomtom": {
+    "baseUrl": "https://api.tomtom.com",
+    "endpoints": {
+      "calculateRoute": "/routing/1/calculateRoute/{points}/json",
+      "incidentDetails": "/traffic/services/5/incidentDetails",
+      "flowSegmentData": "/traffic/services/4/flowSegmentData/absolute/5/json"
+    },
+    "requiresKey": true
+  },
+  "achd": {
+    "endpoints": {
+      "i84Crossings": "https://maps.achdidaho.org/server/rest/services/OpenDataHub_PublicLayers/ACHD_Traffic_Counts/FeatureServer/0/query?where=(CrossStreetB%20LIKE%20%27%25I84%25%27%20OR%20CrossStreetB%20LIKE%20%27%25I-84%25%27%20OR%20CrossStreetB%20LIKE%20%27%25I%2084%25%27%20OR%20CrossStreetE%20LIKE%20%27%25I84%25%27%20OR%20CrossStreetE%20LIKE%20%27%25I-84%25%27%20OR%20CrossStreetE%20LIKE%20%27%25I%2084%25%27)&outFields=*&orderByFields=Date2%20DESC&f=pjson&returnGeometry=false&resultRecordCount=100",
+      "i84Correlations": "https://maps.achdidaho.org/server/rest/services/OpenDataHub_PublicLayers/ACHD_Traffic_Counts/FeatureServer/0/query?where=StreetId%20IN%20(929%2C601%2C117%2C1360%2C412%2C1870)&outFields=*&orderByFields=Date2%20DESC&f=pjson&returnGeometry=false&resultRecordCount=100"
+    },
+    "requiresKey": false
+  },
+  "idaho511": {
+    "baseUrl": "https://511.idaho.gov/api/v2",
+    "endpoints": {
+      "events": "/get/event"
+    },
+    "requiresKey": true
+  }
+}

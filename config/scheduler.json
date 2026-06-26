@@ -1,0 +1,6 @@
+{
+  "minutesBetweenRuns": 13,
+  "isAutomationRunning": true,
+  "useCache": false,
+  "skipFirstRunOnStartup": true
+}

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@iliad/ai": ["./src/standalone/ai/index.ts"],
+      "@iliad/auth": ["./src/standalone/auth/client.tsx"],
+      "@iliad/auth/*": ["./src/standalone/auth/*"],
+      "@iliad/core": ["./src/standalone/core/index.tsx"],
+      "@iliad/firebase/admin": ["./src/standalone/firebase/admin.ts"],
+      "@iliad/ui": ["./src/standalone/ui/index.tsx"]
+    },
+    "noEmit": true,
+    "isolatedModules": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,99 @@
+{
+  "replacements": [
+    {
+      "find": "Rd\\.|Rd",
+      "id": "rep-rd",
+      "replace": "Road"
+    },
+    {
+      "find": "I-184|I184|Interstate 184|State Highway 184|ID-184",
+      "id": "rep-i184",
+      "replace": "The Connector"
+    },
+    {
+      "find": "nampa boulevard",
+      "id": "rep-nampa-franklin",
+      "replace": "franklin boulevard"
+    },
+    {
+      "find": "ID-16|ID16|Idaho State Highway 16",
+      "id": "rep-hwy16",
+      "replace": "Highway 16"
+    },
+    {
+      "find": "SH-55|State Highway 55|Route 55",
+      "id": "rep-hwy55",
+      "replace": "Highway 55"
+    },
+    {
+      "find": "SH-44|SH 44|Route 44|Highway 44|State Hwy 44|Hwy 44",
+      "id": "rep-hwy44",
+      "replace": "State Street"
+    },
+    {
+      "find": "US-20/US-26|US 20/26|US-20-26|US 20-26|US 20 / 26|US 20 and 26|US 20 & 26|US 20|US 26|US-20|US-26|U\\.S\\. Route 20|U\\.S\\. Route 26|US Route 20|US Route 26|US Highway 20|US Highway 26|US Highway 20/26",
+      "id": "rep-us20-26",
+      "replace": "Exit 26 for Chinden West in Caldwell"
+    },
+    {
+      "find": "US 93|U\\.S\\. Route 93|US Route 93|US Highway 93|Route 93",
+      "id": "rep-us93",
+      "replace": "Highway 93"
+    },
+    {
+      "find": "US 30|U\\.S\\. Route 30|US Route 30|US Highway 30|Route 30",
+      "id": "rep-us30",
+      "replace": "Highway 30"
+    },
+    {
+      "find": "I 84|Interstate 84|Route I-84|Interstate Eighty-Four",
+      "id": "rep-i84",
+      "replace": "I-84"
+    },
+    {
+      "find": "Boise, ID|City of Boise|Boise City|Boise ID",
+      "id": "rep-boise-variants",
+      "replace": "Boise"
+    },
+    {
+      "find": "Meridian, ID|Meridian City|City of Meridian",
+      "id": "rep-meridian-variants",
+      "replace": "Meridian"
+    },
+    {
+      "find": "Nampa, ID|City of Nampa|Nampa City",
+      "id": "rep-nampa-variants",
+      "replace": "Nampa"
+    },
+    {
+      "find": "Caldwell, ID|City of Caldwell|Caldwell City",
+      "id": "rep-caldwell-variants",
+      "replace": "Caldwell"
+    },
+    {
+      "find": "Star, ID|City of Star|Star City",
+      "id": "rep-star-variants",
+      "replace": "Star"
+    },
+    {
+      "find": "Overland Rd|Overland|Overland Rd\\.|Overland Avenue",
+      "id": "rep-overland-variants",
+      "replace": "Overland Road"
+    },
+    {
+      "find": "Fairview Ave|Fairview|Fairview Ave\\.|Fairview Road",
+      "id": "rep-fairview-variants",
+      "replace": "Fairview Avenue"
+    },
+    {
+      "find": "Vista Ave|Vista|Vista Ave\\.|Vista Road",
+      "id": "rep-vista-variants",
+      "replace": "Vista Avenue"
+    },
+    {
+      "find": "Federal Wy|Federal|Federal Way Road|Federal Hwy",
+      "id": "rep-federal-variants",
+      "replace": "Federal Way"
+    }
+  ]
+}

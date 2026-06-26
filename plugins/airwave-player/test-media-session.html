@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Session API Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #1976d2;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📻 Media Session API Test</h1>
+        
+        <div class="info">
+            <strong>How to test:</strong>
+            <ol>
+                <li>Click "Play Test Audio"</li>
+                <li>On mobile: Lock your device and check the lock screen</li>
+                <li>On desktop: Look for media controls in your browser or system</li>
+                <li>Verify that song title, artist, and artwork are displayed</li>
+                <li>Test play/pause controls from the system controls</li>
+            </ol>
+        </div>
+
+        <div class="controls">
+            <button id="playBtn">Play Test Audio</button>
+            <button id="pauseBtn">Pause</button>
+            <button id="updateBtn">Update Metadata</button>
+        </div>
+
+        <div class="status" id="status">
+            <div id="supportStatus"></div>
+            <div id="playbackStatus">Status: Stopped</div>
+        </div>
+
+        <audio id="audio" src="" preload="none"></audio>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const updateBtn = document.getElementById('updateBtn');
+        const supportStatus = document.getElementById('supportStatus');
+        const playbackStatus = document.getElementById('playbackStatus');
+
+        // Use a test audio stream URL - replace with your own stream for testing
+        // Example public test streams:
+        // - 'https://streaming.radio.co/s2a99fda15/listen' (example public stream)
+        // - 'https://streams.radio.co/example/listen' (replace with your stream)
+        audio.src = 'https://streaming.radio.co/s2a99fda15/listen';
+
+        // Check Media Session API support
+        if ('mediaSession' in navigator) {
+            supportStatus.innerHTML = '<span class="success">✓ Media Session API is supported!</span>';
+        } else {
+            supportStatus.innerHTML = '<span class="error">✗ Media Session API is not supported in this browser</span>';
+        }
+
+        // Sample metadata
+        const metadata = {
+            title: 'Airwave Player Test',
+            artist: 'Test Artist',
+            album: 'Live Stream',
+            cover: 'https://picsum.photos/512/512'
+        };
+
+        // Update Media Session metadata
+        function updateMediaSession(data) {
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: data.title || 'Live Radio',
+                    artist: data.artist || 'Airwave Player',
+                    album: data.album || 'Live Stream',
+                    artwork: data.cover ? [
+                        { src: data.cover, sizes: '512x512' },
+                        { src: data.cover, sizes: '256x256' },
+                        { src: data.cover, sizes: '128x128' }
+                    ] : []
+                });
+                console.log('Media Session metadata updated:', data);
+            }
+        }
+
+        // Register Media Session action handlers
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setActionHandler('play', function() {
+                audio.play();
+                playbackStatus.textContent = 'Status: Playing (via system controls)';
+            });
+
+            navigator.mediaSession.setActionHandler('pause', function() {
+                audio.pause();
+                playbackStatus.textContent = 'Status: Paused (via system controls)';
+            });
+        }
+
+        // Play button
+        playBtn.addEventListener('click', function() {
+            audio.play();
+            playbackStatus.textContent = 'Status: Playing';
+            updateMediaSession(metadata);
+        });
+
+        // Pause button
+        pauseBtn.addEventListener('click', function() {
+            audio.pause();
+            playbackStatus.textContent = 'Status: Paused';
+        });
+
+        // Update metadata button
+        updateBtn.addEventListener('click', function() {
+            const newMetadata = {
+                title: 'Updated Song Title - ' + new Date().toLocaleTimeString(),
+                artist: 'Updated Artist',
+                album: 'Live Stream',
+                cover: 'https://picsum.photos/512/512?random=' + Date.now()
+            };
+            updateMediaSession(newMetadata);
+            playbackStatus.textContent = 'Status: Metadata updated!';
+        });
+
+        // Audio event listeners
+        audio.addEventListener('play', function() {
+            playbackStatus.textContent = 'Status: Playing';
+        });
+
+        audio.addEventListener('pause', function() {
+            playbackStatus.textContent = 'Status: Paused';
+        });
+    </script>
+</body>
+</html>

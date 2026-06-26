@@ -1,0 +1,12 @@
+{
+  "apiKeys": {
+    "tomtom": "",
+    "here": "",
+    "idaho511": "",
+    "google": ""
+  },
+  "scheduler": {
+    "isAutomationRunning": true,
+    "useCache": false
+  }
+}

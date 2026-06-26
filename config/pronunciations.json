@@ -1,0 +1,82 @@
+{
+  "pronunciations": [
+    {
+      "apiVariations": [],
+      "id": "i84-highway",
+      "localName": "I-84",
+      "ssml": "<say-as interpret-as=\"verbatim\">I-84</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "boise-phoneme",
+      "localName": "Boise",
+      "ssml": "<prosody rate=\"105%\" pitch=\"-1st\" volume=\"+0.5dB\"><say-as interpret-as=\"verbatim\" phoneme=\"bɔɪˈsi\">Boise</say-as></prosody>"
+    },
+    {
+      "apiVariations": [],
+      "id": "meridian-phoneme",
+      "localName": "Meridian",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"məˈrɪdiən\">Meridian</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "nampa-phoneme",
+      "localName": "Nampa",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"næmpə\">Nampa</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "caldwell-phoneme",
+      "localName": "Caldwell",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"kɑːldwɛl\">Caldwell</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "kuna-phoneme",
+      "localName": "Kuna",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"ˈkjuːnə\">Kuna</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "middleton-phoneme",
+      "localName": "Middleton",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"ˈmɪdəltən\">Middleton</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "star-phoneme",
+      "localName": "Star",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"stɑːr\">Star</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "eagle-phoneme",
+      "localName": "Eagle",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"ˈiːɡəl\">Eagle</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "vista-avenue",
+      "localName": "Vista Avenue",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"ˈvɪstə əˈvɛnjuː\">Vista Avenue</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "us93-highway",
+      "localName": "US-93",
+      "ssml": "<say-as interpret-as=\"verbatim\">U S ninety three</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "us30-highway",
+      "localName": "US-30",
+      "ssml": "<say-as interpret-as=\"verbatim\">U S thirty</say-as>"
+    },
+    {
+      "apiVariations": [],
+      "id": "gowen-road",
+      "localName": "Gowen",
+      "ssml": "<say-as interpret-as=\"verbatim\" phoneme=\"'gaʊən\">Gowen</say-as>"
+    }
+  ]
+}

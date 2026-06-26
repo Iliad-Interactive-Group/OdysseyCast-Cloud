@@ -1,0 +1,54 @@
+# Node dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Environment and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.test
+.env.production
+
+.env.*
+!.env.example
+.envrc
+*.pem
+*.p12
+*.key
+*.crt
+*.cer
+*service-account*.json
+*firebase-admin*.json
+
+# OS/editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Test coverage and reports
+coverage/
+playwright-report/
+
+# Misc temp artifacts
+tmp/
+temp/
+.cache/

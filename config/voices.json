@@ -1,0 +1,13 @@
+{
+  "voices": [
+    {
+      "breakMaxMs": 230,
+      "breakMinMs": 150,
+      "id": "voice-default",
+      "name": "kore",
+      "pitch": "medium",
+      "rate": "135%",
+      "volume": "medium"
+    }
+  ]
+}

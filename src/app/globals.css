@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --odyssey-glow-alpha: 0.12;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --odyssey-glow-alpha: 0.08;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(56, 189, 248, 0.08), transparent 36%),
+      radial-gradient(circle at bottom right, rgba(232, 121, 249, 0.06), transparent 32%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--background)) 44%, hsl(var(--muted) / 0.35));
+  }
+
+  .dark body {
+    background:
+      radial-gradient(circle at top left, rgba(56, 189, 248, 0.06), transparent 34%),
+      radial-gradient(circle at bottom right, rgba(232, 121, 249, 0.05), transparent 30%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--background)) 44%, rgba(2, 6, 23, 0.92));
+  }
+}
+
+@layer utilities {
+  .odyssey-panel {
+    @apply border-border/70 bg-card/65 backdrop-blur;
+  }
+}

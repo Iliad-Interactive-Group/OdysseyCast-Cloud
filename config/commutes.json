@@ -1,0 +1,503 @@
+{
+  "commutes": [
+    {
+      "id": "commute-1",
+      "incidentBboxes": [
+        {
+          "bbox": "-116.273712,43.606717,-116.211571,43.620016",
+          "id": "bbox-1",
+          "name": "Downtown Connector"
+        },
+        {
+          "id": "bbox-1765374419550",
+          "name": "The Flying Wye Interchange",
+          "bbox": "-116.302036,43.588567,-116.267017,43.606717"
+        },
+        {
+          "id": "bbox-1765374527899",
+          "name": "Southeast Boise",
+          "bbox": "-116.273712,43.55648,-116.17947,43.588443"
+        },
+        {
+          "id": "bbox-1765374591544",
+          "name": "I84 Corridor - Boise to Nampa",
+          "bbox": "-116.583389,43.590059,-116.296972,43.602242"
+        },
+        {
+          "id": "bbox-1765374654850",
+          "name": "Nampa and Caldwell",
+          "bbox": "-116.685689,43.598505,-116.583389,43.677021"
+        }
+      ],
+      "name": "Boise to Caldwell Westbound I84",
+      "routes": [
+        {
+          "id": "route-1",
+          "legs": [
+            {
+              "coordinates": "43.6192,-116.2193:43.5975,-116.2957",
+              "id": "leg-1-1",
+              "name": "Downtown Boise to the Flying Wye",
+              "segments": [
+                {
+                  "coordinates": "43.6192,-116.2193:43.5975,-116.2957",
+                  "endExit": "2",
+                  "endExitName": "Curtis Road",
+                  "id": "segment-1-1-1",
+                  "name": "Nearing the Curtis Road Exit",
+                  "roadName": "The Connector",
+                  "startExit": "Downtown",
+                  "startExitName": "Downtown Boise"
+                },
+                {
+                  "coordinates": "43.6172,-116.2534:43.5975,-116.2962",
+                  "endExit": "49",
+                  "endExitName": "Flying Wye Interchange",
+                  "id": "segment-1-1-2",
+                  "name": "Merging at the Flying Wye",
+                  "roadName": "The connector",
+                  "startExit": "2",
+                  "startExitName": "Curtis Road"
+                }
+              ]
+            }
+          ],
+          "name": "Downtown Boise to the Flying Wye Interchange"
+        },
+        {
+          "id": "route-2",
+          "legs": [
+            {
+              "coordinates": "43.5509,-116.1723:43.5975,-116.2962",
+              "id": "leg-2-1",
+              "name": "East Boise to the Flying Wye Interchange",
+              "segments": [
+                {
+                  "coordinates": "43.5592,-116.1841",
+                  "endExit": "54",
+                  "endExitName": "Broadway Avenue",
+                  "id": "segment-2-1-1",
+                  "name": "Approaching the Broadway Exit",
+                  "roadName": "I84",
+                  "startExit": "57",
+                  "startExitName": "Gowen Road"
+                },
+                {
+                  "coordinates": "43.5693,-116.2069",
+                  "endExit": "53",
+                  "endExitName": "Vista Avenue",
+                  "id": "segment-2-1-2",
+                  "name": "Nearing the Vista Avenue Exit",
+                  "roadName": "I84",
+                  "startExit": "54",
+                  "startExitName": "Broadway Avenue"
+                },
+                {
+                  "coordinates": "43.5722,-116.228",
+                  "endExit": "52",
+                  "endExitName": "Orchard Street",
+                  "id": "segment-2-1-3",
+                  "name": "Before the Orchard Street Exit",
+                  "roadName": "I84",
+                  "startExit": "53",
+                  "startExitName": "Vista Avenue"
+                },
+                {
+                  "coordinates": "43.5915,-116.2766",
+                  "endExit": "50A",
+                  "endExitName": "Cole Road",
+                  "id": "segment-2-1-4",
+                  "name": "Before the merge at the Flying Wye",
+                  "roadName": "I84",
+                  "startExit": "52",
+                  "startExitName": "Orchard Street"
+                }
+              ]
+            }
+          ],
+          "name": "East Boise to the Flying Wye Interchange"
+        },
+        {
+          "id": "route-3",
+          "legs": [
+            {
+              "coordinates": "43.5975,-116.2962:43.5936,-116.3932",
+              "id": "leg-3-1",
+              "name": "The Flying Wye to Meridian",
+              "segments": [
+                {
+                  "coordinates": "43.5975,-116.3253",
+                  "endExit": "46",
+                  "endExitName": "Eagle Road",
+                  "id": "segment-3-1-1",
+                  "name": "Approaching the Eagle Road Exit",
+                  "roadName": "I84",
+                  "startExit": "49",
+                  "startExitName": "flying wye interchange"
+                },
+                {
+                  "coordinates": "43.5936,-116.3752",
+                  "endExit": "44",
+                  "endExitName": "Meridian Road",
+                  "id": "segment-3-1-2",
+                  "name": "Nearing Meridian Road",
+                  "roadName": "I84",
+                  "startExit": "46",
+                  "startExitName": "Eagle Road"
+                }
+              ]
+            },
+            {
+              "coordinates": "43.5936,-116.3932:43.5995,-116.5133",
+              "id": "leg-3-2",
+              "name": "Meridian to Nampa",
+              "segments": [
+                {
+                  "coordinates": "43.5936,-116.4139",
+                  "endExit": "42",
+                  "endExitName": "Ten Mile Road",
+                  "id": "segment-3-2-1",
+                  "name": "Just before Ten Mile Road",
+                  "roadName": "I84",
+                  "startExit": "44",
+                  "startExitName": "Meridian Road"
+                },
+                {
+                  "coordinates": "43.5991,-116.4908",
+                  "endExit": "38",
+                  "endExitName": "Franklin Road and Garrity Boulevard Exit",
+                  "id": "segment-3-2-2",
+                  "name": "The Garrity Exit",
+                  "roadName": "I84",
+                  "startExit": "42",
+                  "startExitName": "Ten Mile Road"
+                }
+              ]
+            },
+            {
+              "coordinates": "43.5995,-116.5132:43.6768,-116.6865",
+              "id": "leg-3-3",
+              "name": "Nampa to Caldwell",
+              "segments": [
+                {
+                  "coordinates": "43.5984,-116.5354",
+                  "endExit": "36",
+                  "endExitName": "Franklin Boulevard",
+                  "id": "segment-3-3-1",
+                  "name": "Nearing the Franklin Road Exit",
+                  "roadName": "I84",
+                  "startExit": "38",
+                  "startExitName": "Franklin Road and Garrity Boulevard"
+                },
+                {
+                  "coordinates": "43.5998,-116.562",
+                  "endExit": "35",
+                  "endExitName": "Northside Boulevard",
+                  "id": "segment-3-3-2",
+                  "name": "Approaching Northside Boulevard",
+                  "roadName": "I84",
+                  "startExit": "36",
+                  "startExitName": "Franklin Road"
+                },
+                {
+                  "coordinates": "43.6043,-116.5882",
+                  "endExit": "33",
+                  "endExitName": "Karcher Road",
+                  "id": "segment-3-3-3",
+                  "name": "Karcher Road Bypass",
+                  "roadName": "I84",
+                  "startExit": "35",
+                  "startExitName": "Northside Boulevard"
+                },
+                {
+                  "coordinates": "43.6305,-116.6258",
+                  "endExit": "29",
+                  "endExitName": "Chinden Boulevard West, US 20",
+                  "id": "segment-3-3-4",
+                  "name": "Nearing exit 26 for West Chinden",
+                  "roadName": "I84",
+                  "startExit": "33",
+                  "startExitName": "Karcher Road"
+                },
+                {
+                  "coordinates": "43.6667,-116.6692",
+                  "endExit": "28",
+                  "endExitName": "10th Avenue in Caldwell",
+                  "id": "segment-3-3-5",
+                  "name": "Approaching the 10th Avenue Exit",
+                  "roadName": "I84",
+                  "startExit": "29",
+                  "startExitName": "Chinden Boulevard West, US 20"
+                },
+                {
+                  "coordinates": "43.6751,-116.6841",
+                  "endExit": "27",
+                  "endExitName": "Centennial Way",
+                  "id": "segment-3-3-6",
+                  "name": "Near the Centennial Way exit",
+                  "roadName": "I84",
+                  "startExit": "28",
+                  "startExitName": "10th Avenue in Caldwell"
+                }
+              ]
+            }
+          ],
+          "name": "Flying Wye Interchange to Caldwell"
+        }
+      ]
+    },
+    {
+      "id": "commute-1763694214181",
+      "incidentBboxes": [
+        {
+          "id": "bbox-1765374711511",
+          "name": "Downtown Boise Connector",
+          "bbox": "-116.273712,43.606717,-116.211571,43.620016"
+        },
+        {
+          "id": "bbox-1765374726171",
+          "name": "The Flying Wye Interchange",
+          "bbox": "-116.302036,43.588567,-116.267017,43.606717"
+        },
+        {
+          "id": "bbox-1765374740183",
+          "name": "Southeast Boise",
+          "bbox": "-116.273712,43.55648,-116.17947,43.588443"
+        },
+        {
+          "id": "bbox-1765374783641",
+          "name": "I84 Corridor - Boise to Caldwell",
+          "bbox": "-116.583389,43.590059,-116.296972,43.602242"
+        },
+        {
+          "id": "bbox-1765374806528",
+          "name": "Nampa and Caldwell",
+          "bbox": "-116.685689,43.598505,-116.583389,43.677021"
+        }
+      ],
+      "name": "Eastbound Caldwell to Boise via I84",
+      "routes": [
+        {
+          "id": "route-1763694287258",
+          "legs": [
+            {
+              "coordinates": "43.6663,-116.6686:43.5992,-116.5135",
+              "id": "leg-1763694344100",
+              "name": "Caldwell to Nampa",
+              "segments": [
+                {
+                  "coordinates": "43.6658,-116.6674",
+                  "endExit": "28",
+                  "endExitName": "10th Avenue in Caldwell",
+                  "id": "segment-1763694854189",
+                  "name": "Nearing 10th Avenue",
+                  "roadName": "I84",
+                  "startExit": "27",
+                  "startExitName": "Centennial Way"
+                },
+                {
+                  "coordinates": "43.6524,-116.6528",
+                  "endExit": "29",
+                  "endExitName": "Chinden Boulevard West, US 20",
+                  "id": "segment-1763694926436",
+                  "name": "Approaching Exit 29 ",
+                  "roadName": "I84",
+                  "startExit": "28",
+                  "startExitName": "10th Avenue in Caldwell"
+                },
+                {
+                  "coordinates": "43.6524,-116.6528",
+                  "endExit": "33",
+                  "endExitName": "Karcher Road",
+                  "id": "segment-1763695061631",
+                  "name": "Close to Karcher Road",
+                  "roadName": "I84",
+                  "startExit": "29",
+                  "startExitName": "Chinden Boulevard West, US 20"
+                },
+                {
+                  "coordinates": "43.6036,-116.5876",
+                  "endExit": "35",
+                  "endExitName": "Northside Boulevard",
+                  "id": "segment-1763695204046",
+                  "name": "Approaching Northside Boulevard",
+                  "roadName": "I84",
+                  "startExit": "33",
+                  "startExitName": "Karcher Road"
+                },
+                {
+                  "coordinates": "43.5996,-116.5618",
+                  "endExit": "36",
+                  "endExitName": "Franklin Road",
+                  "id": "segment-1763695220154",
+                  "name": "Near Franklin Boulevard",
+                  "roadName": "I84",
+                  "startExit": "35",
+                  "startExitName": "Northside Boulevard"
+                },
+                {
+                  "coordinates": "43.5981,-116.5339",
+                  "endExit": "38",
+                  "endExitName": "Franklin Road and Garrity Boulevard",
+                  "id": "segment-1763695253766",
+                  "name": "Close to Garrity Boulevard",
+                  "roadName": "I84",
+                  "startExit": "36",
+                  "startExitName": "Franklin Road"
+                }
+              ]
+            },
+            {
+              "coordinates": "43.5992,-116.5135:43.5934,-116.3929",
+              "id": "leg-1763694461819",
+              "name": "Nampa to Meridian",
+              "segments": [
+                {
+                  "coordinates": "43.5977,-116.4802",
+                  "endExit": "42",
+                  "endExitName": "Ten Mile Road",
+                  "id": "segment-1763695549084",
+                  "name": "Approaching Ten Mile Road",
+                  "roadName": "I84",
+                  "startExit": "38",
+                  "startExitName": "Franklin Road and Garrity Boulevard Exit"
+                },
+                {
+                  "coordinates": "43.5934,-116.4111",
+                  "endExit": "44",
+                  "endExitName": "Meridian Road",
+                  "id": "segment-1763695597071",
+                  "name": "Near Meridian Road",
+                  "roadName": "I84",
+                  "startExit": "42",
+                  "startExitName": "Ten Mile Road"
+                }
+              ]
+            },
+            {
+              "coordinates": "43.5934,-116.3929:43.5971,-116.2952",
+              "id": "leg-1763694478484",
+              "name": "Meridian to the Flying wye",
+              "segments": [
+                {
+                  "coordinates": "43.5933,-116.3731",
+                  "endExit": "46",
+                  "endExitName": "Eagle Road",
+                  "id": "segment-1763695641342",
+                  "name": "Approaching Eagle Road",
+                  "roadName": "I84",
+                  "startExit": "44",
+                  "startExitName": "Meridian Road"
+                },
+                {
+                  "coordinates": "43.5971,-116.3162",
+                  "endExit": "49",
+                  "endExitName": "flying wye interchange",
+                  "id": "segment-1763695665565",
+                  "name": "Merging at the Flying Wye",
+                  "roadName": "I84",
+                  "startExit": "46",
+                  "startExitName": "Eagle Road"
+                }
+              ]
+            }
+          ],
+          "name": "Caldwell to the flying wye"
+        },
+        {
+          "id": "route-1763694301795",
+          "legs": [
+            {
+              "coordinates": "43.5971,-116.2952:43.619,-116.2243",
+              "id": "leg-1763694592579",
+              "name": "the flying wye to downtown boise",
+              "segments": [
+                {
+                  "coordinates": "43.6123,-116.2656",
+                  "endExit": "2",
+                  "endExitName": "Curtis Road",
+                  "id": "segment-1763695847842",
+                  "name": "Approaching the Curtis Road Exit",
+                  "roadName": "The Connector",
+                  "startExit": "49",
+                  "startExitName": "Flying Wye Interchange"
+                },
+                {
+                  "coordinates": "43.6185,-116.228",
+                  "endExit": "Downtown",
+                  "endExitName": "Downtown Boise",
+                  "id": "segment-1763695952412",
+                  "name": "Before the River Street exit",
+                  "roadName": "The Connector",
+                  "startExit": "2",
+                  "startExitName": "Curtis Road"
+                }
+              ]
+            }
+          ],
+          "name": "The Flying wye to downtown"
+        },
+        {
+          "id": "route-1763694312140",
+          "legs": [
+            {
+              "coordinates": "43.5971,-116.2952:43.5715,-116.2169",
+              "id": "leg-1763694677048",
+              "name": "The flying wye to vista avenue",
+              "segments": [
+                {
+                  "coordinates": "43.585,-116.2638",
+                  "endExit": "52",
+                  "endExitName": "Orchard Street",
+                  "id": "segment-1763695974780",
+                  "name": "Close to the Orchard Street Exit",
+                  "roadName": "I84",
+                  "startExit": "49",
+                  "startExitName": "Flying Wye Interchange"
+                },
+                {
+                  "coordinates": "43.5719,-116.2268",
+                  "endExit": "53",
+                  "endExitName": "Vista Avenue",
+                  "id": "segment-1763696036334",
+                  "name": "Approaching Vista Avenue",
+                  "roadName": "I84",
+                  "startExit": "52",
+                  "startExitName": "Orchard Street"
+                }
+              ]
+            },
+            {
+              "coordinates": "43.5715,-116.2169:43.5432,-116.1624",
+              "id": "leg-1763694767080",
+              "name": "vista avenue to gowen road",
+              "segments": [
+                {
+                  "coordinates": "43.5688,-116.206",
+                  "endExit": "54",
+                  "endExitName": "Broadway Avenue",
+                  "id": "segment-1763696062494",
+                  "name": "Passing by Broadway Avenue",
+                  "roadName": "I84",
+                  "startExit": "53",
+                  "startExitName": "Vista Avenue"
+                },
+                {
+                  "coordinates": "43.5544,-116.1778",
+                  "endExit": "57",
+                  "endExitName": "Gowen Road",
+                  "id": "segment-1763696108168",
+                  "name": "Near Gowen Road",
+                  "roadName": "I84",
+                  "startExit": "54",
+                  "startExitName": "Broadway Avenue"
+                }
+              ]
+            }
+          ],
+          "name": "The flying wye to east boise"
+        }
+      ]
+    }
+  ]
+}
