@@ -921,14 +921,14 @@ export const ODYSSEY_MODULES: OdysseyModuleDefinition[] = [
   },
   {
     key: 'remote-simpltrackr',
-    href: '/remote-simpltrackr',
-    label: 'Remote Tracker',
-    description: 'Remote event module with reporting and easy cart-fire workflows',
+    href: '/odysseycast-automation',
+    label: 'Automation',
+    description: 'Traffic and remote automation operations through OdysseyCast-Automation',
     icon: Radio,
     status: 'integration-target',
     audience: 'Field talent and remote ops',
-    objective: 'Support on-site remotes with simplified cart workflows and reporting.',
-    reuseLabel: 'SIMPLTRACKR integration',
+    objective: 'Run automation workflows and reporting in a unified cloud shell.',
+    reuseLabel: 'OdysseyCast-Automation integration',
     metrics: [
       {
         label: 'Use Case',
@@ -987,15 +987,15 @@ export const ODYSSEY_MODULES: OdysseyModuleDefinition[] = [
     ],
     crossModuleLinks: [
       {
-        title: 'Remote SimplTrackr + Voice Tracker Pro',
+        title: 'Automation + Voice Tracker Pro',
         description: 'Remote-ready assets can be generated and loaded quickly.',
       },
       {
-        title: 'Remote SimplTrackr + Traffic Logs',
+        title: 'Automation + Traffic Logs',
         description: 'Campaign-linked remotes can reflect inventory and sponsor status.',
       },
       {
-        title: 'Remote SimplTrackr + Petey',
+        title: 'Automation + Petey',
         description: 'Petey can summarize remote readiness and post-event performance.',
       },
     ],

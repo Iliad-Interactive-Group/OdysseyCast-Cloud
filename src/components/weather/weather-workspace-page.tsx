@@ -94,6 +94,7 @@ function toBulletin(
 export function WeatherWorkspacePage() {
   const [selectedMarket, setSelectedMarket] = useState<MarketPreset>(MARKET_PRESETS[0]);
   const [isLoading, setIsLoading] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [current, setCurrent] = useState<WeatherSnapshot | null>(null);
   const [nextHours, setNextHours] = useState<WeatherSnapshot[]>([]);
@@ -281,7 +282,13 @@ export function WeatherWorkspacePage() {
               variant="outline"
               onClick={async () => {
                 if (!bulletin) return;
-                await navigator.clipboard.writeText(bulletin);
+
+                try {
+                  await navigator.clipboard.writeText(bulletin);
+                  setCopyStatus('Bulletin copied to clipboard.');
+                } catch {
+                  setCopyStatus('Copy failed. You can still select the text manually.');
+                }
               }}
               disabled={!bulletin}
             >
@@ -291,6 +298,7 @@ export function WeatherWorkspacePage() {
               <Link href="/audio-playground">Send To Audio Playground</Link>
             </Button>
           </div>
+          {copyStatus ? <p className="text-xs text-muted-foreground">{copyStatus}</p> : null}
         </CardContent>
       </Card>
     </div>

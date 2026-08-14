@@ -1,5 +1,5 @@
-import { ModuleScene } from '@/components/workspace/module-scene';
+import { redirect } from 'next/navigation';
 
 export default function RemoteSimplTrackrPage() {
-  return <ModuleScene moduleKey="remote-simpltrackr" />;
+  redirect('/odysseycast-automation');
 }
