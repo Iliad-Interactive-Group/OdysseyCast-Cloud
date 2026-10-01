@@ -1,7 +1,7 @@
 'use client';
 
 import type { TrafficRunListResponse } from '@/lib/traffic-runtime.types';
-import { getIdToken } from '@iliad/auth';
+import { authFetch } from '@iliad/auth';
 import {
   Badge,
   Button,
@@ -15,32 +15,6 @@ import { Activity, AlertCircle, CheckCircle2, Loader2, RadioTower } from 'lucide
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 
-async function withTenantAuth(input: RequestInfo, init?: RequestInit): Promise<Response> {
-  const token = await Promise.race<string | null>([
-    getIdToken().catch(() => null),
-    new Promise<null>((resolve) => {
-      window.setTimeout(() => resolve(null), 800);
-    }),
-  ]);
-  const headers = new Headers(init?.headers ?? {});
-  const tenantContextId =
-    typeof window !== 'undefined'
-      ? (window.localStorage.getItem('odyssey-tenant-context') ?? 'iig-core')
-      : null;
-
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
-  }
-
-  if (tenantContextId) {
-    headers.set('x-odyssey-tenant-context', tenantContextId);
-  }
-
-  return fetch(input, {
-    ...init,
-    headers,
-  });
-}
 
 export function PeteyControlCenter() {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,8 +30,8 @@ export function PeteyControlCenter() {
 
       try {
         const [setupResponse, runsResponse] = await Promise.all([
-          withTenantAuth('/api/traffic/setup'),
-          withTenantAuth('/api/traffic/runs'),
+          authFetch('/api/traffic/setup'),
+          authFetch('/api/traffic/runs'),
         ]);
 
         if (!setupResponse.ok || !runsResponse.ok) {

@@ -3,6 +3,7 @@
 import { runPromotionDecisioning } from '@/lib/promosync-deterministic-engine';
 import type { PromoSyncBootstrapPayload } from '@/lib/promosync-bootstrap';
 import { PROMOSYNC_ENTITY_ORDER, PROMOSYNC_SQL_SCHEMA } from '@/lib/sales-traffic-model';
+import { authFetch } from '@iliad/auth';
 import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@iliad/ui';
 import { AlertCircle } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
@@ -21,7 +22,7 @@ export function PromoSyncSchemaPanel() {
       setLoadState('loading');
 
       try {
-        const response = await fetch('/api/promosync/bootstrap', {
+        const response = await authFetch('/api/promosync/bootstrap', {
           signal: controller.signal,
         });
 

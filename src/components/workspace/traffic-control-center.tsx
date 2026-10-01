@@ -16,7 +16,7 @@ import type {
   TrafficSetupBootstrap,
   TrafficSetupConfig,
 } from '@/lib/traffic-setup.types';
-import { getIdToken } from '@iliad/auth';
+import { authFetch } from '@iliad/auth';
 import {
   Badge,
   Button,
@@ -221,37 +221,6 @@ function hydrateForm(
   };
 }
 
-async function withTenantAuth(input: RequestInfo, init?: RequestInit): Promise<Response> {
-  const token = await Promise.race<string | null>([
-    getIdToken().catch(() => null),
-    new Promise<null>((resolve) => {
-      window.setTimeout(() => resolve(null), 800);
-    }),
-  ]);
-  const headers = new Headers(init?.headers ?? {});
-  const tenantContextId =
-    typeof window !== 'undefined'
-      ? (window.localStorage.getItem('odyssey-tenant-context') ?? 'iig-core')
-      : null;
-
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
-  }
-
-  if (tenantContextId) {
-    headers.set('x-odyssey-tenant-context', tenantContextId);
-  }
-
-  if (!headers.has('Content-Type') && init?.body) {
-    headers.set('Content-Type', 'application/json');
-  }
-
-  return fetch(input, {
-    ...init,
-    headers,
-  });
-}
-
 export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps) {
   const [bootstrap, setBootstrap] = useState<TrafficSetupBootstrap | null>(null);
   const [formState, setFormState] = useState<SetupFormState>(createDefaultState());
@@ -283,7 +252,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
     setError(null);
 
     try {
-      const response = await withTenantAuth('/api/traffic/setup');
+      const response = await authFetch('/api/traffic/setup');
       if (!response.ok) {
         throw new Error('Traffic setup bootstrap failed');
       }
@@ -308,7 +277,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
     setIsLoadingRuns(true);
 
     try {
-      const response = await withTenantAuth('/api/traffic/runs');
+      const response = await authFetch('/api/traffic/runs');
       if (!response.ok) {
         throw new Error('Traffic runs failed to load');
       }
@@ -326,7 +295,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
     setIsLoadingControlConfig(true);
 
     try {
-      const response = await withTenantAuth('/api/traffic/control-config');
+      const response = await authFetch('/api/traffic/control-config');
       if (!response.ok) {
         throw new Error('Traffic control config failed to load');
       }
@@ -384,7 +353,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
         slotTimes: slotTimes.filter((slot) => isValidSlot(slot)),
       };
 
-      const response = await withTenantAuth('/api/traffic/setup', {
+      const response = await authFetch('/api/traffic/setup', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
@@ -426,7 +395,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
         dataSource: 'ui-candidate-form',
       };
 
-      const response = await withTenantAuth('/api/traffic/coverage-candidates', {
+      const response = await authFetch('/api/traffic/coverage-candidates', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
@@ -462,7 +431,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
     setApprovingCandidateId(candidateId);
 
     try {
-      const response = await withTenantAuth(
+      const response = await authFetch(
         `/api/traffic/coverage-candidates/${candidateId}/approve`,
         {
           method: 'POST',
@@ -498,7 +467,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
         slotTime,
         notes: mappedCart?.slotContext?.trim() || undefined,
       };
-      const response = await withTenantAuth('/api/traffic/runs/generate', {
+      const response = await authFetch('/api/traffic/runs/generate', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
@@ -531,7 +500,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
         config: parsedDraft,
       };
 
-      const response = await withTenantAuth('/api/traffic/control-config', {
+      const response = await authFetch('/api/traffic/control-config', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
@@ -583,7 +552,7 @@ export function TrafficControlCenter({ activeViewId }: TrafficControlCenterProps
     setIsCheckingTomTom(true);
 
     try {
-      const response = await withTenantAuth('/api/traffic/tomtom-health');
+      const response = await authFetch('/api/traffic/tomtom-health');
       if (!response.ok) {
         const errorPayload = (await response.json()) as { error?: string };
         throw new Error(errorPayload.error ?? 'Unable to test TomTom connectivity');

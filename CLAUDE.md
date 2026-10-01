@@ -43,23 +43,20 @@ The cloud control surface for the OdysseyCast suite. It covers the traffic pipel
 - OdysseyCast-Automation integration:
   * ODYSSEY_AUTOMATION_WEB_BASE_URL, ODYSSEY_AUTOMATION_RUNTIME_API_BASE_URL
   * ODYSSEY_AUTOMATION_LOCAL_ADMIN_ENABLED, ODYSSEY_AUTOMATION_LOCAL_ADMIN_BASE_URL
-- Auth / tenancy (see §4):
-  * ODYSSEY_DEV_AUTH_BYPASS, NEXT_PUBLIC_ODYSSEY_DEV_AUTH, NEXT_PUBLIC_ODYSSEY_DEFAULT_TENANT
+- Auth (see §4): standard iig-core client vars `NEXT_PUBLIC_FIREBASE_*` (`PROJECT_ID=iig-core`). No auth flags exist; never add one.
 
 ---
 
 ## 4. CORE ARCHITECTURE & SECURITY RULES
 
 ### AUTHENTICATION & DATABASE ARCHITECTURE
-- Current state:
-  * `src/standalone/auth/middleware.ts` verifies `Authorization: Bearer` ID tokens with Firebase Admin `verifyIdToken`. It reads `role` (`superAdmin|admin|user`) and `tenantId` from the custom claims.
-  * Data goes to Firestore through `firebase-admin`. Collections include `trafficRuns`, `trafficSetupConfigs`, `trafficControlConfigs`, `deliveries`, `connectors`, `connectorTokens` and `marketCoverage*`, and queries are scoped by `tenantId`.
-  * The Firebase project ID is not committed.
-- Known violation (legacy, do not extend):
-  * The repo ships a dev auth bypass. When `ODYSSEY_DEV_AUTH_BYPASS` is not `false` and `NODE_ENV` is not production, the server injects a fake `local-dev-user` superAdmin.
-  * The client `AuthProvider` always returns a fake user and the `odyssey-dev-token` token unless `NEXT_PUBLIC_ODYSSEY_DEV_AUTH=false`.
-  * Traffic routes fall back to an `x-odyssey-tenant-context` header outside production.
-  * There is no real client login. This contradicts the workspace no-bypass rule. Never add more bypass paths. Replacing the bypass with real `iig-core` Firebase Auth (client sign-in, ID token verified server-side, app data in the app's own project) is the target. Do it only when asked, and any new auth work must target `iig-core`.
+- Current state (iig-core):
+  * Client: `src/standalone/auth/client.tsx` (`@iliad/auth`) signs in to Firebase project `iig-core` (Google SSO + email/password) at `/login`. `AuthProvider` redirects every other route to `/login` until signed in and fails closed when `NEXT_PUBLIC_FIREBASE_*` is missing or `PROJECT_ID` is not `iig-core`. `authFetch` attaches `Authorization: Bearer <iig-core ID token>`.
+  * Server: `src/standalone/auth/middleware.ts` `verifyAuthToken` verifies the token with Admin `verifyIdToken` on a separate named Admin app pinned to project `iig-core` (`getIigCoreAuthAdmin` in `src/standalone/firebase/admin.ts`). No token / invalid token / missing config / lookup error → null → 401.
+  * Roles + tenants come from this app's own Firestore: `users/{uid}` = `{ role: superAdmin|admin|user, tenantId, tenantIds?, disabled? }`. No record → least privilege (`user`, no tenant → tenant-scoped APIs refuse). iig-core custom claims are NOT trusted for roles (shared across apps). `x-odyssey-tenant-context` only selects among the user's `tenantIds`. `GET /api/auth/me` returns the resolved access.
+  * Data goes to Firestore through `firebase-admin` (default app = this app's project). Collections include `users`, `trafficRuns`, `trafficSetupConfigs`, `trafficControlConfigs`, `deliveries`, `connectors`, `connectorTokens` and `marketCoverage*`, and queries are scoped by `tenantId`.
+  * The Firebase data project ID is not committed.
+  * Never reintroduce a dev/mock user, hardcoded token, or auth bypass flag.
 - Desktop connectors authenticate with opaque bearer tokens stored in Firestore `connectorTokens` (`src/lib/connector-auth.ts`). These tokens must be unrevoked and unexpired, and they are separate from user auth.
 - ABSOLUTE PROHIBITION ON TEMP AUTH / LOCAL BYPASSES:
   * NEVER build custom, temporary, or mock authentication gateways.
@@ -131,10 +128,10 @@ Perform this workflow ONLY when explicitly asked to "promote", "deploy to main",
 # ==============================================================================
 STAGING_URL = "TBD"
 PRODUCTION_URL = "TBD"
-CENTRAL_AUTH_PROJECT = "N/A (Firebase Admin verifyIdToken against FIREBASE_PROJECT_ID project; dev bypass present; iig-core migration pending)"
+CENTRAL_AUTH_PROJECT = "iig-core"
 APP_FIRESTORE_PROJECT_STAGING = "TBD"
 APP_FIRESTORE_PROJECT_PROD = "TBD"
 DATABASE_TYPE = "Firestore"
-AUTH_PROVIDER = "Firebase Auth ID tokens (server verify) + Firestore connector tokens; no client login yet"
+AUTH_PROVIDER = "iig-core Firebase Auth (client sign-in, Admin verifyIdToken) + app-DB users/{uid} roles + Firestore connector tokens"
 DEFAULT_BRANCH = "master (main created; promote to main, mirror to master)"
 DEV_PORT = "9012"

@@ -55,12 +55,26 @@ Required for runtime features:
 - Firebase Admin credentials for Firestore and Storage
 - APOLLO_MUSIC_SCHEDULER_BASE_URL, APOLLO_MUSIC_SCHEDULER_EMAIL, and APOLLO_MUSIC_SCHEDULER_PASSWORD for Music Logs proxying
 
-Local dev can run with auth bypass enabled:
+- NEXT_PUBLIC_FIREBASE_* for the central iig-core Firebase Auth project (sign-in)
 
-- ODYSSEY_DEV_AUTH_BYPASS=true
-- NEXT_PUBLIC_ODYSSEY_DEV_AUTH=true
+## Authentication
 
-Disable both for strict auth behavior.
+Users sign in at `/login` against the central **iig-core** Firebase Auth project
+(Google SSO or email/password). Every page redirects to `/login` until signed in,
+and every API route verifies the iig-core ID token server-side
+(`verifyIdToken`, project `iig-core`). There is no dev bypass: no token, an invalid
+token, or missing config returns 401.
+
+Roles and tenants come from this app's own Firestore project, never from iig-core.
+Provision each user with a document at `users/{uid}` (uid = iig-core Firebase uid):
+
+```json
+{ "role": "superAdmin" | "admin" | "user", "tenantId": "iig-core", "tenantIds": ["iig-core"], "disabled": false }
+```
+
+A signed-in user without this document gets least privilege (`user`, no tenant) and
+every tenant-scoped API refuses them. `tenantIds` lists the tenants the header
+switcher may select; the `x-odyssey-tenant-context` header only picks among them.
 
 ## Music Logs (Apollo) Integration
 

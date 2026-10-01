@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { applicationDefault, cert, getApps, initializeApp, type App } from 'firebase-admin/app';
+import { applicationDefault, cert, getApp, getApps, initializeApp, type App } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
@@ -60,8 +60,9 @@ function getFirebaseAdminApp(): App {
     return cachedApp;
   }
 
-  if (getApps().length > 0) {
-    cachedApp = getApps()[0] as App;
+  const existing = getApps().find((app) => app.name === '[DEFAULT]');
+  if (existing) {
+    cachedApp = existing;
     return cachedApp;
   }
 
@@ -82,9 +83,27 @@ export function getStorageAdmin() {
   return getStorage(getFirebaseAdminApp());
 }
 
-export function getAuthAdmin() {
+// Users authenticate against the central iig-core Firebase Auth hub. ID-token
+// verification only needs the iig-core project ID (Google's public signing
+// keys), so it runs on a separate named Admin app; app data stays in the
+// default app above (this app's own Firestore project).
+export const IIG_CORE_AUTH_PROJECT_ID = 'iig-core';
+const IIG_CORE_AUTH_APP_NAME = 'iig-core-auth';
+
+function getIigCoreAuthApp(): App {
   try {
-    return getAuth(getFirebaseAdminApp());
+    return getApp(IIG_CORE_AUTH_APP_NAME);
+  } catch {
+    return initializeApp(
+      { credential: resolveCredential(), projectId: IIG_CORE_AUTH_PROJECT_ID },
+      IIG_CORE_AUTH_APP_NAME,
+    );
+  }
+}
+
+export function getIigCoreAuthAdmin() {
+  try {
+    return getAuth(getIigCoreAuthApp());
   } catch {
     return null;
   }

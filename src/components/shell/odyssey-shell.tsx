@@ -1,5 +1,6 @@
 'use client';
 
+import { LOGIN_PATH } from '@iliad/auth';
 import { Button, cn } from '@iliad/ui';
 import type { ReactNode } from 'react';
 import { Suspense } from 'react';
@@ -20,6 +21,10 @@ export function OdysseyShell({ children }: { children: ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  if (pathname === LOGIN_PATH) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="flex h-screen flex-col bg-background text-foreground overflow-hidden">

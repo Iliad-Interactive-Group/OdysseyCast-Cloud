@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { useAuthContext } from '@iliad/auth';
+import { setSelectedTenantId, signOut, useAuthContext } from '@iliad/auth';
 import { Button, cn } from '@iliad/ui';
-import { ChevronDown, LayoutGrid, Menu, Moon, RadioTower, Sun } from 'lucide-react';
+import { ChevronDown, LayoutGrid, LogOut, Menu, Moon, RadioTower, Sun } from 'lucide-react';
 
 type OdysseyTheme = 'dark' | 'light';
 
@@ -14,23 +14,29 @@ interface TenantContextOption {
   detail: string;
 }
 
-const TENANT_CONTEXTS: TenantContextOption[] = [
-  {
-    id: 'iig-core',
-    label: 'IIG Core Cluster',
-    detail: 'Primary broadcast operations tenant',
-  },
-  {
-    id: 'station-kjot',
+// Display labels for known tenants. Which tenants a user can pick comes from
+// the server (app DB access record), never from this list.
+const TENANT_LABELS: Record<string, Omit<TenantContextOption, 'id'>> = {
+  'iig-core': { label: 'IIG Core Cluster', detail: 'Primary broadcast operations tenant' },
+  'station-kjot': {
     label: 'KJOT Boise',
     detail: 'Traffic, promo scheduling, and ops coordination',
   },
-  {
-    id: 'odyssey-rollout',
+  'odyssey-rollout': {
     label: 'Odyssey Rollout',
     detail: 'Canonical suite shell alignment and platform review',
   },
-];
+};
+
+function toTenantOption(id: string): TenantContextOption {
+  return { id, ...(TENANT_LABELS[id] ?? { label: id, detail: 'Tenant' }) };
+}
+
+const NO_TENANT: TenantContextOption = {
+  id: '',
+  label: 'No tenant access',
+  detail: 'Ask an OdysseyCast admin to provision your account',
+};
 
 function getThemeFromDom(): OdysseyTheme {
   if (typeof document === 'undefined') return 'dark';
@@ -46,24 +52,21 @@ function applyTheme(nextTheme: OdysseyTheme) {
 }
 
 export function OdysseySuiteHeader({ onOpenSidebar }: { onOpenSidebar: () => void }) {
-  const { user } = useAuthContext();
+  const { user, refreshAccess } = useAuthContext();
+  const tenantContexts = (user?.tenantIds ?? []).map(toTenantOption);
   const [theme, setTheme] = useState<OdysseyTheme>('dark');
-  const [selectedContextId, setSelectedContextId] = useState<string>(TENANT_CONTEXTS[0]!.id);
+  const [selectedContextId, setSelectedContextId] = useState<string>('');
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const contextMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setTheme(getThemeFromDom());
-
-    try {
-      const savedContextId = window.localStorage.getItem('odyssey-tenant-context');
-      if (savedContextId && TENANT_CONTEXTS.some((item) => item.id === savedContextId)) {
-        setSelectedContextId(savedContextId);
-      }
-    } catch {
-      // Ignore storage access failures.
-    }
   }, []);
+
+  useEffect(() => {
+    // The server already resolved the active tenant (saved choice if allowed).
+    setSelectedContextId(user?.tenantId ?? '');
+  }, [user?.tenantId]);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -77,7 +80,7 @@ export function OdysseySuiteHeader({ onOpenSidebar }: { onOpenSidebar: () => voi
   }, []);
 
   const selectedContext =
-    TENANT_CONTEXTS.find((item) => item.id === selectedContextId) ?? TENANT_CONTEXTS[0]!;
+    tenantContexts.find((item) => item.id === selectedContextId) ?? tenantContexts[0] ?? NO_TENANT;
 
   const toggleTheme = () => {
     const nextTheme: OdysseyTheme = theme === 'dark' ? 'light' : 'dark';
@@ -88,12 +91,12 @@ export function OdysseySuiteHeader({ onOpenSidebar }: { onOpenSidebar: () => voi
   const handleContextSelect = (contextId: string) => {
     setSelectedContextId(contextId);
     setIsContextMenuOpen(false);
+    setSelectedTenantId(contextId);
+    void refreshAccess();
+  };
 
-    try {
-      window.localStorage.setItem('odyssey-tenant-context', contextId);
-    } catch {
-      // Ignore storage access failures.
-    }
+  const handleSignOut = () => {
+    void signOut();
   };
 
   return (
@@ -180,7 +183,7 @@ export function OdysseySuiteHeader({ onOpenSidebar }: { onOpenSidebar: () => voi
               </div>
 
               <div className="space-y-1">
-                {TENANT_CONTEXTS.map((context) => (
+                {tenantContexts.map((context) => (
                   <button
                     key={context.id}
                     type="button"
@@ -244,6 +247,21 @@ export function OdysseySuiteHeader({ onOpenSidebar }: { onOpenSidebar: () => voi
             {user?.email || selectedContext.detail}
           </p>
         </div>
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={handleSignOut}
+          aria-label="Sign out"
+          className={cn(
+            theme === 'dark'
+              ? 'hover:bg-zinc-800 text-zinc-400'
+              : 'hover:bg-zinc-100 text-zinc-600',
+          )}
+        >
+          <LogOut size={16} />
+        </Button>
       </div>
     </header>
   );
