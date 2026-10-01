@@ -32,6 +32,7 @@ The cloud control surface for the OdysseyCast suite. It covers the traffic pipel
 - Firebase Admin. Use either the JSON payload or the split fields:
   * FIREBASE_SERVICE_ACCOUNT_JSON
   * FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY, FIREBASE_STORAGE_BUCKET
+  * App data project (decided 2026-10-01): `studio-2435800166-35b3b` (Firebase "OdysseyCast", shared with odysseycast-client). Set `FIREBASE_SERVICE_ACCOUNT_JSON` to an admin key for that project (one-line JSON, `.env.local` only, never committed).
   * These are not yet the standard names (`FIREBASE_DATABASE_PROJECT_ID`, `GOOGLE_SERVICE_ACCOUNT_*`). Rename only when asked.
 - AI / TTS:
   * GOOGLE_GENAI_API_KEY is a legacy name and should become `GEMINI_API_KEY`. The code still reads only the legacy name plus these fallbacks: ODYSSEYCAST_TRAFFIC_GEMINI_KEY, TRAFFIC_GOOGLE_GENAI_API_KEY, GOOGLE_API_KEY (`src/lib/traffic-env.ts`, `src/standalone/ai`).
@@ -129,8 +130,8 @@ Perform this workflow ONLY when explicitly asked to "promote", "deploy to main",
 STAGING_URL = "TBD"
 PRODUCTION_URL = "TBD"
 CENTRAL_AUTH_PROJECT = "iig-core"
-APP_FIRESTORE_PROJECT_STAGING = "TBD"
-APP_FIRESTORE_PROJECT_PROD = "TBD"
+APP_FIRESTORE_PROJECT_STAGING = "studio-2435800166-35b3b"
+APP_FIRESTORE_PROJECT_PROD = "studio-2435800166-35b3b"
 DATABASE_TYPE = "Firestore"
 AUTH_PROVIDER = "iig-core Firebase Auth (client sign-in, Admin verifyIdToken) + app-DB users/{uid} roles + Firestore connector tokens"
 DEFAULT_BRANCH = "master (main created; promote to main, mirror to master)"
