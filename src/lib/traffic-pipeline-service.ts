@@ -653,7 +653,7 @@ async function generateSpeechAudio(params: {
   const apiKey = resolveTrafficGeminiApiKey();
   if (!apiKey) {
     throw new Error(
-      'Gemini key is required for traffic TTS generation. Set GOOGLE_GENAI_API_KEY or ODYSSEYCAST_TRAFFIC_GEMINI_KEY.',
+      'Gemini key is required for traffic TTS generation. Set GEMINI_API_KEY (legacy: GOOGLE_GENAI_API_KEY).',
     );
   }
 

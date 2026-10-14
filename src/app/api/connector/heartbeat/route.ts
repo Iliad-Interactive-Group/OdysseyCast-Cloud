@@ -1,6 +1,7 @@
 import { verifyConnectorToken } from '@/lib/connector-auth'
 import { getFirestoreAdmin } from '@iliad/firebase/admin'
 import { NextRequest, NextResponse } from 'next/server'
+import { reportServerError } from '@/lib/control-plane'
 
 interface HeartbeatPayload {
   version?: string
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true }, { status: 200 })
   } catch (error) {
+    void reportServerError(error, { route: '/api/connector/heartbeat' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to process heartbeat',

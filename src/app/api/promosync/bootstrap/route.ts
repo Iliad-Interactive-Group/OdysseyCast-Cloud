@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPromoSyncBootstrapPayload } from '@/lib/promosync-repository';
 import { verifyAuthToken } from '@iliad/auth/middleware';
+import { reportServerError } from '@/lib/control-plane';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,6 +14,7 @@ export async function GET(request: NextRequest) {
     const payload = await getPromoSyncBootstrapPayload(tenantId);
     return NextResponse.json(payload);
   } catch (error) {
+    void reportServerError(error, { route: '/api/promosync/bootstrap' });
     return NextResponse.json(
       {
         error:

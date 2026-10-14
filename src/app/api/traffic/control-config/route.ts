@@ -5,6 +5,7 @@ import {
 import type { SaveTrafficControlConfigRequest } from '@/lib/traffic-control-config.types';
 import { resolveTrafficApiAuthContext } from '@/app/api/traffic/_lib/auth-context';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,6 +17,7 @@ export async function GET(request: NextRequest) {
     const payload = await getTrafficControlConfigForTenant(authContext.tenantId);
     return NextResponse.json(payload);
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/control-config' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to load traffic control config',
@@ -47,6 +49,7 @@ export async function POST(request: NextRequest) {
     const saved = await saveTrafficControlConfigForTenant(authContext.tenantId, payload);
     return NextResponse.json(saved, { status: 200 });
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/control-config' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to save traffic control config',

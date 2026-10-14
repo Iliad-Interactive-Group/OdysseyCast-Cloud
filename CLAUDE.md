@@ -35,7 +35,7 @@ The cloud control surface for the OdysseyCast suite. It covers the traffic pipel
   * App data project (decided 2026-10-01): `studio-2435800166-35b3b` (Firebase "OdysseyCast", shared with odysseycast-client). Set `FIREBASE_SERVICE_ACCOUNT_JSON` to an admin key for that project (one-line JSON, `.env.local` only, never committed).
   * These are not yet the standard names (`FIREBASE_DATABASE_PROJECT_ID`, `GOOGLE_SERVICE_ACCOUNT_*`). Rename only when asked.
 - AI / TTS:
-  * GOOGLE_GENAI_API_KEY is a legacy name and should become `GEMINI_API_KEY`. The code still reads only the legacy name plus these fallbacks: ODYSSEYCAST_TRAFFIC_GEMINI_KEY, TRAFFIC_GOOGLE_GENAI_API_KEY, GOOGLE_API_KEY (`src/lib/traffic-env.ts`, `src/standalone/ai`).
+  * GEMINI_API_KEY (standard). Legacy names still read, in order: GOOGLE_GENAI_API_KEY, GOOGLE_GEMINI_API_KEY, ODYSSEYCAST_TRAFFIC_GEMINI_KEY, TRAFFIC_GOOGLE_GENAI_API_KEY, GOOGLE_API_KEY (`resolveGeminiApiKey` in `src/lib/traffic-env.ts`; a legacy hit is republished as GEMINI_API_KEY). Rename deployments to GEMINI_API_KEY.
   * GEMINI_TEXT_MODEL, GEMINI_TTS_MODEL (default `gemini-2.5-flash-preview-tts`)
 - Traffic:
   * TOMTOM_API_KEY (fallbacks: ODYSSEYCAST_TOMTOM_KEY, TRAFFIC_TOMTOM_API_KEY)
@@ -44,6 +44,7 @@ The cloud control surface for the OdysseyCast suite. It covers the traffic pipel
 - OdysseyCast-Automation integration:
   * ODYSSEY_AUTOMATION_WEB_BASE_URL, ODYSSEY_AUTOMATION_RUNTIME_API_BASE_URL
   * ODYSSEY_AUTOMATION_LOCAL_ADMIN_ENABLED, ODYSSEY_AUTOMATION_LOCAL_ADMIN_BASE_URL
+- Control plane (App-SIEM) relay: `APP_SIEM_KEY` + `CONTROL_PLANE_URL` (workspace standard). `src/lib/control-plane.ts` posts server errors to `<CONTROL_PLANE_URL>/api/ingest` with `x-app-siem-key`: every error Next.js catches (`src/instrumentation.ts` `onRequestError`) and every API catch block that answers 500. Missing/short/placeholder key or URL → skipped with one warning; it never throws.
 - Auth (see §4): standard iig-core client vars `NEXT_PUBLIC_FIREBASE_*` (`PROJECT_ID=iig-core`). No auth flags exist; never add one.
 
 ---

@@ -3,6 +3,7 @@ import type { GenerateTrafficRunRequest } from '@/lib/traffic-runtime.types';
 import { validateGenerateTrafficRunPayload } from '@/lib/traffic-setup-validation';
 import { resolveTrafficApiAuthContext } from '@/app/api/traffic/_lib/auth-context';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,6 +22,7 @@ export async function POST(request: NextRequest) {
     const run = await generateTrafficRun(authContext.tenantId, payload);
     return NextResponse.json(run, { status: 201 });
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/runs/generate' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to generate traffic run',

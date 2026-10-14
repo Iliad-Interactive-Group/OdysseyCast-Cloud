@@ -2,6 +2,7 @@ import { listTrafficRuns } from '@/lib/traffic-run-repository';
 import type { TrafficRunListResponse } from '@/lib/traffic-runtime.types';
 import { resolveTrafficApiAuthContext } from '@/app/api/traffic/_lib/auth-context';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(payload);
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/runs' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to load traffic runs',

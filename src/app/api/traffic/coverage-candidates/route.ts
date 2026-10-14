@@ -3,6 +3,7 @@ import { validateCoverageCandidatePayload } from '@/lib/traffic-setup-validation
 import type { CreateCoverageCandidateRequest } from '@/lib/traffic-setup.types';
 import { verifyAuthToken } from '@iliad/auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,6 +25,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(created, { status: 201 });
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/coverage-candidates' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to create coverage candidate',

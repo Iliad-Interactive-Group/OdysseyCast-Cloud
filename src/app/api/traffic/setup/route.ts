@@ -3,6 +3,7 @@ import { validateTrafficSetupPayload } from '@/lib/traffic-setup-validation';
 import type { SaveTrafficSetupRequest } from '@/lib/traffic-setup.types';
 import { resolveTrafficApiAuthContext } from '@/app/api/traffic/_lib/auth-context';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 export async function GET(request: NextRequest) {
   try {
@@ -17,6 +18,7 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json(payload);
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/setup' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to load traffic setup',
@@ -50,6 +52,7 @@ export async function POST(request: NextRequest) {
     const saved = await saveTrafficSetup(authContext.tenantId, payload);
     return NextResponse.json(saved, { status: 200 });
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/setup' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to save traffic setup',

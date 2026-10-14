@@ -50,7 +50,8 @@ See .env.example for the full template.
 
 Required for runtime features:
 
-- GOOGLE_GENAI_API_KEY for AI text and TTS generation
+- GEMINI_API_KEY for AI text and TTS generation (legacy GOOGLE_GENAI_API_KEY still read)
+- APP_SIEM_KEY + CONTROL_PLANE_URL to relay server errors to the control plane (optional; skipped when unset)
 - TOMTOM_API_KEY for live traffic telemetry
 - Firebase Admin credentials for Firestore and Storage
 - APOLLO_MUSIC_SCHEDULER_BASE_URL, APOLLO_MUSIC_SCHEDULER_EMAIL, and APOLLO_MUSIC_SCHEDULER_PASSWORD for Music Logs proxying

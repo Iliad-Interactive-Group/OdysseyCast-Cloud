@@ -2,6 +2,7 @@ import { getTrafficSetupConfigForTenant } from '@/lib/traffic-setup-repository';
 import { resolveTrafficTomTomApiKey } from '@/lib/traffic-env';
 import { resolveTrafficApiAuthContext } from '@/app/api/traffic/_lib/auth-context';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 const MARKET_BBOX: Record<string, string> = {
   'boise-id': '-116.30,43.48,-116.02,43.69',
@@ -91,6 +92,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(payload, { status: 200 });
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/tomtom-health' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to test TomTom connectivity',

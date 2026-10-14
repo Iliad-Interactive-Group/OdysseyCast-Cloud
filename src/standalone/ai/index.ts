@@ -1,4 +1,5 @@
 import 'server-only';
+import { resolveGeminiApiKey } from '@/lib/traffic-env';
 
 interface GenerateParams {
   model: string;
@@ -10,9 +11,9 @@ interface GenerateParams {
 }
 
 function getGeminiApiKey(): string {
-  const key = process.env.GOOGLE_GENAI_API_KEY?.trim();
+  const key = resolveGeminiApiKey();
   if (!key) {
-    throw new Error('GOOGLE_GENAI_API_KEY is required for text generation.');
+    throw new Error('GEMINI_API_KEY is required for text generation.');
   }
 
   return key;

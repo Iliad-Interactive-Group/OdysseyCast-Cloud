@@ -1,6 +1,7 @@
 import { verifyConnectorToken } from '@/lib/connector-auth'
 import { acknowledgeDelivery } from '@/lib/traffic-delivery-repository'
 import { NextRequest, NextResponse } from 'next/server'
+import { reportServerError } from '@/lib/control-plane'
 
 interface ConnectorAcknowledgePayload {
   deliveryId?: string
@@ -40,6 +41,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ data: delivery }, { status: 200 })
   } catch (error) {
+    void reportServerError(error, { route: '/api/connector/acknowledge' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to acknowledge delivery',

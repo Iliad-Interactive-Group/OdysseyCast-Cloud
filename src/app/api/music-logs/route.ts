@@ -1,6 +1,7 @@
 import { proxyApolloMusicApi } from '@/lib/apollo-music-service';
 import { verifyAuthToken } from '@iliad/auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,6 +21,7 @@ export async function GET(request: NextRequest) {
     const payload = await response.json();
     return NextResponse.json(payload, { status: response.status });
   } catch (error) {
+    void reportServerError(error, { route: '/api/music-logs' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to load music log day state',

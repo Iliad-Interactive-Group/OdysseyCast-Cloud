@@ -1,6 +1,7 @@
 import { approveCoverageCandidate } from '@/lib/traffic-setup-repository';
 import { verifyAuthToken } from '@iliad/auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
+import { reportServerError } from '@/lib/control-plane';
 
 interface ApproveRouteParams {
   params: Promise<{
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest, context: ApproveRouteParams) {
 
     return NextResponse.json(approved, { status: 200 });
   } catch (error) {
+    void reportServerError(error, { route: '/api/traffic/coverage-candidates/[candidateId]/approve' });
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Unable to approve coverage candidate',
