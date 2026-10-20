@@ -1,8 +1,8 @@
 # OdysseyCast
 
-Standalone Next.js app for OdysseyCast cloud operations.
+Next.js customer UI for OdysseyCast, on top of [OdysseyCast-Cloud-API](https://github.com/Iliad-Interactive-Group/OdysseyCast-Cloud-API) (stations, pairing, config sync, billing). Extracted from a monorepo; some monorepo-era modules (traffic pipeline, PromoSync, Music Logs proxy) are still here.
 
-This repository was extracted from a monorepo so local development can stay fast and low-friction.
+Agents: read [`CLAUDE.md`](CLAUDE.md) first. Status and open work live in Asana: [🤖 AI work](https://app.asana.com/0/0/1219596667889891/f) · [👤 Human work](https://app.asana.com/0/0/1219596797534319/f). No deploy target yet (hosting is an open human task).
 
 ## Stack
 
@@ -55,6 +55,7 @@ Required for runtime features:
 - TOMTOM_API_KEY for live traffic telemetry
 - Firebase Admin credentials for Firestore and Storage
 - APOLLO_MUSIC_SCHEDULER_BASE_URL, APOLLO_MUSIC_SCHEDULER_EMAIL, and APOLLO_MUSIC_SCHEDULER_PASSWORD for Music Logs proxying
+- ODYSSEYCAST_API_URL for the OdysseyCast-Cloud-API relay (`/api/automation/*` → `/v1/portal/*`; defaults to production)
 
 - NEXT_PUBLIC_FIREBASE_* for the central iig-core Firebase Auth project (sign-in)
 

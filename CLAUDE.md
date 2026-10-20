@@ -1,6 +1,8 @@
 # AGENT ENVIRONMENT & WORKFLOW RULES — ODYSSEYCAST CLOUD (`OdysseyCast-Cloud`)
 
-The cloud control surface for the OdysseyCast suite. It covers the traffic pipeline, PromoSync, a weather workspace, a proxy for Apollo Music Logs, a proxy for OdysseyCast-Automation, and a connector API that desktop apps use for deliveries and heartbeats. It was extracted from a monorepo.
+The customer UI for OdysseyCast, on top of OdysseyCast-Cloud-API (decided 2026-10-19). It also still carries the monorepo-era modules: traffic pipeline, PromoSync, a weather workspace, a proxy for Apollo Music Logs, and a connector API that desktop apps use for deliveries and heartbeats. Which of those stay is an open 👤 decision in Asana.
+
+Status, roadmap and open work live in Asana, not in this repo: 🤖 AI work https://app.asana.com/0/0/1219596667889891/f · 👤 Human work https://app.asana.com/0/0/1219596797534319/f. Code on `staging` is the truth.
 
 ## 1. COMMUNICATION & BEHAVIOR
 - Style: Extreme brevity. Zero fluff, zero conversational intros/outros, zero pleasantries.
@@ -16,12 +18,11 @@ The cloud control surface for the OdysseyCast suite. It covers the traffic pipel
   * `src/app/api/{traffic,promosync,music-logs,automation,connector}`: server routes
   * `src/lib/*`: services and repositories (`traffic-pipeline-service.ts`, `promosync-deterministic-engine.ts`, `apollo-music-service.ts`, `connector-auth.ts`, `local-request-guard.ts`, `traffic-env.ts`)
   * `src/standalone/*`: local adapters behind the former monorepo aliases `@iliad/{ui,auth,core,firebase/admin,ai}`. Import through the aliases.
-  * `config/*.json`: seed config for traffic, carts, voices and prompts. `plugins/airwave-player`: a WordPress/PHP embed that is not part of the Next build (rules in `plugins/OUTLIER_PATTERNS.md`).
-  * `WORKSTREAM_PROGRESS.md`: open work items.
+  * `config/*.json`: seed config for traffic, carts, voices and prompts. `plugins/airwave-player`: a WordPress/PHP embed that is not part of the Next build.
 - Commands: `npm install` · `npm run dev` (polling watcher) / `npm run dev:fast` · `npm run build` · `npm run start` · `npm run typecheck` · `npm run lint`. There is no test script.
 - Local Dev Port: 9012, hardcoded in the scripts.
 - Auto-Install Dependencies: npm (`package-lock.json`). Run install proactively when package files change.
-- Secrets: The deploy target is listed as DigitalOcean, but the repo has no `.do/` spec and `doctl apps list` shows no OdysseyCast app. Local secrets go in `.env.local` (`cp .env.example .env.local`). NEVER commit env files, service-account JSON, or keys.
+- Deploy: none yet. Hosting, staging/prod URLs and DNS are Cody's open 👤 task (https://app.asana.com/0/0/1219596797534319/f). Local secrets go in `.env.local` (`cp .env.example .env.local`). NEVER commit env files, service-account JSON, or keys.
 - CLI Tooling: `gh`, `doctl`, `gcloud`/`firebase` (Firestore project access).
 
 ---
@@ -41,9 +42,9 @@ The cloud control surface for the OdysseyCast suite. It covers the traffic pipel
   * TOMTOM_API_KEY (fallbacks: ODYSSEYCAST_TOMTOM_KEY, TRAFFIC_TOMTOM_API_KEY)
 - Apollo Music Scheduler proxy:
   * APOLLO_MUSIC_SCHEDULER_BASE_URL, APOLLO_MUSIC_SCHEDULER_UI_BASE_URL, APOLLO_MUSIC_SCHEDULER_EMAIL, APOLLO_MUSIC_SCHEDULER_PASSWORD
-- OdysseyCast-Automation integration:
-  * ODYSSEY_AUTOMATION_WEB_BASE_URL, ODYSSEY_AUTOMATION_RUNTIME_API_BASE_URL
-  * ODYSSEY_AUTOMATION_LOCAL_ADMIN_ENABLED, ODYSSEY_AUTOMATION_LOCAL_ADMIN_BASE_URL
+- OdysseyCast-Cloud-API (stations, pairing, config library):
+  * ODYSSEYCAST_API_URL (default `https://odysseycast-api.iliadinteractive.com`; staging Worker URL for a staging deploy). `/api/automation/{path}` relays to `<ODYSSEYCAST_API_URL>/v1/portal/{path}` with the caller's iig-core bearer token; Cloud-API does the auth and tenant/role checks (D1 memberships). `/odysseycast-automation` lists the caller's accounts and stations from it.
+  * ODYSSEY_AUTOMATION_LOCAL_ADMIN_ENABLED, ODYSSEY_AUTOMATION_LOCAL_ADMIN_BASE_URL (loopback-only admin proxy to a station on the same machine)
 - Control plane (App-SIEM) relay: `APP_SIEM_KEY` + `CONTROL_PLANE_URL` (workspace standard). `src/lib/control-plane.ts` posts server errors to `<CONTROL_PLANE_URL>/api/ingest` with `x-app-siem-key`: every error Next.js catches (`src/instrumentation.ts` `onRequestError`) and every API catch block that answers 500. Missing/short/placeholder key or URL → skipped with one warning; it never throws.
 - Auth (see §4): standard iig-core client vars `NEXT_PUBLIC_FIREBASE_*` (`PROJECT_ID=iig-core`). No auth flags exist; never add one.
 
@@ -74,7 +75,7 @@ The cloud control surface for the OdysseyCast suite. It covers the traffic pipel
 4. Server-only modules (`import 'server-only'`) hold the keys (Gemini, TomTom, Firebase Admin). Never import them into client components or expose keys through `NEXT_PUBLIC_*`.
 5. PromoSync placement is a deterministic engine (`promosync-deterministic-engine.ts`). Keep its output reproducible for the same inputs.
 6. Monorepo aliases `@iliad/*` resolve to `src/standalone/*`. Don't reintroduce monorepo package dependencies.
-7. Plugins must degrade safely: the player keeps working when metadata fails, and no secrets go in the repo (`plugins/OUTLIER_PATTERNS.md`).
+7. Plugins must degrade safely: the player keeps working when metadata fails, and no secrets go in the repo.
 
 ---
 
