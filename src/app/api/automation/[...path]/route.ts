@@ -1,91 +1,56 @@
-import { verifyAuthToken } from '@iliad/auth/middleware';
+import { getOdysseyCastApiUrl } from '@/lib/odysseycast-api';
 import { NextRequest, NextResponse } from 'next/server';
 
-const DEFAULT_AUTOMATION_RUNTIME_BASE_URL = 'http://127.0.0.1:5179';
-
-function getAutomationRuntimeBaseUrl() {
-  const configured = process.env.ODYSSEY_AUTOMATION_RUNTIME_API_BASE_URL?.trim();
-  const value = configured && configured.length > 0 ? configured : DEFAULT_AUTOMATION_RUNTIME_BASE_URL;
-  return value.endsWith('/') ? value.slice(0, -1) : value;
-}
+// Server-side relay to OdysseyCast-Cloud-API's portal routes. The caller's iig-core
+// ID token is forwarded as-is: Cloud-API verifies it and resolves tenant/role from
+// its own D1 memberships, so no second auth table is kept here.
 
 function buildJsonError(message: string, status: number, code: string) {
   return NextResponse.json({ error: message, code }, { status });
 }
 
-async function proxyToAutomation(
+async function proxyToCloudApi(
   request: NextRequest,
   context: { params: Promise<{ path?: string[] }> },
 ) {
-  const authUser = await verifyAuthToken(request);
-  if (!authUser?.tenantId) {
+  const authorization = request.headers.get('authorization');
+  if (!authorization?.toLowerCase().startsWith('bearer ')) {
     return buildJsonError('Unauthorized', 401, 'UNAUTHORIZED');
   }
 
   const { path = [] } = await context.params;
   if (path.length === 0) {
-    return buildJsonError('Route not found for Automation API', 404, 'NOT_FOUND');
+    return buildJsonError('Route not found for Cloud API', 404, 'NOT_FOUND');
   }
 
-  const upstreamPath = path.join('/');
-  const upstreamUrl = new URL(`${getAutomationRuntimeBaseUrl()}/${upstreamPath}`);
-  const incomingUrl = new URL(request.url);
-  incomingUrl.searchParams.forEach((value, key) => {
+  const upstreamUrl = new URL(`${getOdysseyCastApiUrl()}/v1/portal/${path.join('/')}`);
+  new URL(request.url).searchParams.forEach((value, key) => {
     upstreamUrl.searchParams.append(key, value);
   });
 
   const hasBody = request.method !== 'GET' && request.method !== 'HEAD';
-  const body = hasBody ? await request.arrayBuffer() : undefined;
+  const contentType = request.headers.get('content-type');
 
   const upstreamResponse = await fetch(upstreamUrl, {
     method: request.method,
     headers: {
-      'x-odyssey-tenant-id': authUser.tenantId,
-      ...(authUser.email ? { 'x-odyssey-user-email': authUser.email } : {}),
-      ...(request.headers.get('content-type')
-        ? { 'content-type': request.headers.get('content-type') as string }
-        : {}),
+      authorization,
+      ...(contentType ? { 'content-type': contentType } : {}),
     },
-    body,
+    body: hasBody ? await request.arrayBuffer() : undefined,
     cache: 'no-store',
   });
 
-  const responseBody = await upstreamResponse.arrayBuffer();
-  const contentType = upstreamResponse.headers.get('content-type') || 'application/json';
-
-  return new NextResponse(responseBody, {
+  return new NextResponse(await upstreamResponse.arrayBuffer(), {
     status: upstreamResponse.status,
     headers: {
-      'content-type': contentType,
+      'content-type': upstreamResponse.headers.get('content-type') || 'application/json',
     },
   });
 }
 
-export async function GET(request: NextRequest, context: { params: Promise<{ path?: string[] }> }) {
-  return proxyToAutomation(request, context);
-}
-
-export async function POST(
-  request: NextRequest,
-  context: { params: Promise<{ path?: string[] }> },
-) {
-  return proxyToAutomation(request, context);
-}
-
-export async function PUT(request: NextRequest, context: { params: Promise<{ path?: string[] }> }) {
-  return proxyToAutomation(request, context);
-}
-
-export async function PATCH(
-  request: NextRequest,
-  context: { params: Promise<{ path?: string[] }> },
-) {
-  return proxyToAutomation(request, context);
-}
-
-export async function DELETE(
-  request: NextRequest,
-  context: { params: Promise<{ path?: string[] }> },
-) {
-  return proxyToAutomation(request, context);
-}
+export const GET = proxyToCloudApi;
+export const POST = proxyToCloudApi;
+export const PUT = proxyToCloudApi;
+export const PATCH = proxyToCloudApi;
+export const DELETE = proxyToCloudApi;
